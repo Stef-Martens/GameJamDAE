@@ -6,7 +6,7 @@
             "id": "ac2071c2-6039-4537-aab6-aaba69926aca",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Join",
                     "type": "Button",
                     "id": "6d81c077-7f9d-4f7e-86c1-4eac9600a6d1",
                     "expectedControlType": "Button",
@@ -19,11 +19,22 @@
                 {
                     "name": "",
                     "id": "d8d80f89-5fa6-4300-8cb1-e8ff1a26791f",
-                    "path": "",
+                    "path": "<Keyboard>/anyKey",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Join",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5a1c7b8-a160-46b1-959b-ea456de16523",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Join",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
