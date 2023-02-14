@@ -31,19 +31,37 @@ public class PlayerController : MonoBehaviour
     private float _horizontalRotation;
     private float _verticalRotation;
 
-    private void Start()
+    private InputActionAsset _inputAsset;
+    private InputActionMap _player;
+
+    private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _inputAsset = GetComponentInParent<PlayerInput>().actions;
+        _player = _inputAsset.FindActionMap("Player");
+    }
+
+    private void OnEnable()
+    {
+        _player.FindAction("Jump").started += Jump;
+        _player.FindAction("Move").started += Move;
+        _player.FindAction("Aim").started += Aim;
+        _player.FindAction("Throw").started += Throw;
+        _player.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _player.FindAction("Jump").started -= Jump;
+        _player.FindAction("Move").started -= Move;
+        _player.FindAction("Aim").started -= Aim;
+        _player.FindAction("Throw").started -= Throw;
+        _player.Disable();
     }
 
     private void Update()
     {
         _rb.velocity = new Vector3(_horizontalInput * _speed, _rb.velocity.y, _verticalInput * _speed);
-    }
-
-    private void LateUpdate()
-    {
-        _camera.transform.rotation = Quaternion.Euler(_horizontalRotation, _verticalRotation, 0);
     }
 
     public void Join(InputAction.CallbackContext context)
@@ -52,7 +70,6 @@ public class PlayerController : MonoBehaviour
         {
         }
     }
-
 
     public void Move(InputAction.CallbackContext context)
     {

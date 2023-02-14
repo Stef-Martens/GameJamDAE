@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Cinemachine;
 
-public class CameraController : MonoBehaviour
+public class CameraInitializer : MonoBehaviour
 {
     [SerializeField]
     private Camera cam;
@@ -15,7 +13,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         PlayerController[] playerAmount = FindObjectsOfType<PlayerController>();
-        int layer = playerAmount.Length + 7;
+        int layer = playerAmount.Length + 9;
 
         virtualPlayerCam.layer = layer;
 
