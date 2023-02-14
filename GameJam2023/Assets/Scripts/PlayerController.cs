@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask groundLayer;
     private float _verticalInput;
+    private PlayerInput _playerInput;
 
     private void Start()
     {
@@ -40,7 +41,6 @@ public class PlayerController : MonoBehaviour
     {
         if(context.performed)
         {
-
         }
     }
 
@@ -59,13 +59,7 @@ public class PlayerController : MonoBehaviour
             {
                 _rb.velocity = new Vector2(_rb.velocity.x, _jumpingPower);
             }
- 
         }
-
-        //if (context.canceled && _rb.velocity.y > 0f)
-        //{
-        //    _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.5f);
-        //}
     }
 
     public void Aim(InputAction.CallbackContext context)

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7640481891251624509}
   - component: {fileID: 7640481891251624498}
   - component: {fileID: 7640481891251624499}
+  - component: {fileID: 7058308428845964890}
   m_Layer: 6
   m_Name: Camera
   m_TagString: MainCamera
@@ -84,6 +85,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7640481891251624496}
   m_Enabled: 1
+--- !u!114 &7058308428845964890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7640481891251624496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c4b9ab4d97060479b44f3c3326c29d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7640481891476363461
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +237,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 99021400-8980-40ab-830d-563d3189af46
     m_ActionName: Player/Aim[/XInputControllerWindows/leftTrigger,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e35fbc04-28e4-470f-956d-2fb6ab22384f
+    m_ActionName: Camera/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7058308428845964890}
+        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+        m_MethodName: Look
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 69611e53-8cda-422a-812b-60730daf1f83
+    m_ActionName: Player/Look[/Mouse/delta]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
