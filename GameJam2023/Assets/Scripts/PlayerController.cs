@@ -81,10 +81,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void Rotate(InputAction.CallbackContext context)
-    {
-        Debug.Log("Working");
-    }
+
 
     private bool IsGrounded()
     {

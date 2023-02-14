@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.GraphicsBuffer;
 
 public class CameraController : MonoBehaviour
 {
-    private float _horizontalInput;
-    private float _verticalInput;
-    private Camera _camera;
+    [SerializeField]
+    private float _rotationSpeed;
+    private float _horizontalRotation;
+    private float _verticalRotation;
 
-    private void Start()
+    void LateUpdate()
     {
-        _camera = GetComponent<Camera>();
+        transform.Rotate(Vector3.up, _horizontalRotation * Time.deltaTime * _rotationSpeed, Space.World);
+        transform.Rotate(Vector3.right, _verticalRotation* Time.deltaTime * _rotationSpeed, Space.Self);
     }
 
-    private void LateUpdate()
+    public void Rotate(InputAction.CallbackContext context)
     {
-        _camera.transform.rotation = Quaternion.Euler(_horizontalInput, _verticalInput, 0);
+        _horizontalRotation = context.ReadValue<Vector2>().x;
+        _verticalRotation = context.ReadValue<Vector2>().y;
     }
 
 
