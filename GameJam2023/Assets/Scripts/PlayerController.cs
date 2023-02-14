@@ -24,10 +24,16 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
 
     public LayerMask groundLayer;
+    private float _verticalInput;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        _rb.velocity = new Vector3(_horizontalInput * _speed, _rb.velocity.y, _verticalInput * _speed);
     }
 
     public void Join(InputAction.CallbackContext context)
@@ -41,10 +47,8 @@ public class PlayerController : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        if(context.performed && IsGrounded())
-        {
-
-        }
+        _horizontalInput = context.ReadValue<Vector2>().x;
+        _verticalInput = context.ReadValue<Vector2>().y;
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -58,8 +62,6 @@ public class PlayerController : MonoBehaviour
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.5f);
         }
-
-        Debug.Log(IsGrounded());
     }
 
     public void Aim(InputAction.CallbackContext context)
@@ -74,6 +76,16 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.CheckSphere(groundCheck.position, _radius, groundLayer);
+        Debug.DrawRay(groundCheck.position, Vector3.down, Color.red, 1);
+
+        if (Physics.Raycast(groundCheck.position, Vector3.down, _radius, groundLayer))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }
