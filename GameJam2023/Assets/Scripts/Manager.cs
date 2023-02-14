@@ -33,7 +33,7 @@ public class Manager : MonoBehaviour
         GameObject[] Players = GameObject.FindGameObjectsWithTag("Playerke");
         foreach (var player in Players)
         {
-            if (player.gameObject.name == "Player(Clone)")
+            if (player.gameObject.name == "Player_Stef(Clone)")
             {
                 player.gameObject.name = "Player" + playerCount.ToString();
                 playerCount++;
