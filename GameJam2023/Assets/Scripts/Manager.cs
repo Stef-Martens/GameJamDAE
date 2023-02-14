@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
@@ -12,6 +14,13 @@ public class Manager : MonoBehaviour
     public Camera StartCamera;
 
     int playerCount = 1;
+
+
+    private float timer = 7.0f;
+    private bool timerStarted = false;
+
+    public Text TimerText;
+
 
     void Update()
     {
@@ -29,9 +38,43 @@ public class Manager : MonoBehaviour
                 player.gameObject.name = "Player" + playerCount.ToString();
                 playerCount++;
             }
-
-
         }
+
+
+        if (timerStarted)
+        {
+            timer -= Time.deltaTime;
+
+            if (timer <= 0)
+            {
+                TimerDone(); // Call your function when the timer is done
+                timerStarted = false; // Stop the timer
+            }
+        }
+
+        if (GameObject.FindGameObjectsWithTag("Playerke").Length > 1)
+        {
+            StartTimer();
+        }
+        else
+        {
+            // wachten + movement stop
+            // ....
+        }
+    }
+
+    public void StartTimer()
+    {
+        timerStarted = true;
+        TimerText.text = "Game starts in: " + (Mathf.Round(timer * 10.0f) / 10.0f).ToString() + "s";
+    }
+
+    void TimerDone()
+    {
+        GameObject.FindGameObjectWithTag("InputManager").GetComponent<PlayerInputManager>().DisableJoining();
+        TimerText.enabled = false;
+        // movement starten
+        // ...
     }
 
     void Start()

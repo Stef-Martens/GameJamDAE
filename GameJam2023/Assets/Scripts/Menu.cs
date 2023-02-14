@@ -7,7 +7,6 @@ public class Menu : MonoBehaviour
 {
     public void ClickStart()
     {
-        Debug.Log(SceneManager.sceneCountInBuildSettings);
         if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
