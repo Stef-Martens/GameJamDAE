@@ -51,9 +51,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Look",
+                    "name": "Rotate",
                     "type": "Value",
-                    "id": "69611e53-8cda-422a-812b-60730daf1f83",
+                    "id": "5c430df8-fdc2-4eb8-9fb6-e9f09f759583",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -261,23 +261,12 @@
                 },
                 {
                     "name": "",
-                    "id": "233b8367-f0d4-4ffd-8651-c3851e4a849f",
+                    "id": "b03b215d-782c-4f88-9549-3c9436068221",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1c8897e9-2b53-403e-8ccd-1d8f71116025",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Mouse",
-                    "action": "Look",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

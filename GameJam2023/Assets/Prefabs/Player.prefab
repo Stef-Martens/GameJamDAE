@@ -238,14 +238,10 @@ MonoBehaviour:
     m_ActionId: 99021400-8980-40ab-830d-563d3189af46
     m_ActionName: Player/Aim[/XInputControllerWindows/leftTrigger,/Mouse/rightButton]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e35fbc04-28e4-470f-956d-2fb6ab22384f
-    m_ActionName: Camera/Look[/Mouse/delta]
-  - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7058308428845964890}
-        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
-        m_MethodName: Look
+      - m_Target: {fileID: 7640481892660133423}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Rotate
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -255,8 +251,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 69611e53-8cda-422a-812b-60730daf1f83
-    m_ActionName: Player/Look[/Mouse/delta]
+    m_ActionId: 5c430df8-fdc2-4eb8-9fb6-e9f09f759583
+    m_ActionName: Player/Rotate
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -427,6 +423,7 @@ MonoBehaviour:
   _throwDistance: 0
   _throwSpeed: 0
   _radius: 1
+  _camera: {fileID: 7640481891251624498}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128

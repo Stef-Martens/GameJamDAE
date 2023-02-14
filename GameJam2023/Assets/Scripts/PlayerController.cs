@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private float _throwSpeed;
     [SerializeField]
     private float _radius;
+    [SerializeField]
+    private Camera _camera;
 
     private float _horizontalInput;
     private Rigidbody _rb;
@@ -26,6 +28,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     private float _verticalInput;
     private PlayerInput _playerInput;
+    private float _horizontalRotation;
+    private float _verticalRotation;
 
     private void Start()
     {
@@ -35,6 +39,11 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         _rb.velocity = new Vector3(_horizontalInput * _speed, _rb.velocity.y, _verticalInput * _speed);
+    }
+
+    private void LateUpdate()
+    {
+        _camera.transform.rotation = Quaternion.Euler(_horizontalRotation, _verticalRotation, 0);
     }
 
     public void Join(InputAction.CallbackContext context)
@@ -70,6 +79,11 @@ public class PlayerController : MonoBehaviour
     public void Throw(InputAction.CallbackContext context)
     {
 
+    }
+
+    public void Rotate(InputAction.CallbackContext context)
+    {
+        Debug.Log("Working");
     }
 
     private bool IsGrounded()

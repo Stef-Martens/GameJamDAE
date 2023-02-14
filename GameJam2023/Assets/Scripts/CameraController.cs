@@ -20,10 +20,5 @@ public class CameraController : MonoBehaviour
         _camera.transform.rotation = Quaternion.Euler(_horizontalInput, _verticalInput, 0);
     }
 
-    public void Look(InputAction.CallbackContext context)
-    {
-        _horizontalInput = context.ReadValue<Vector2>().x;
-        _verticalInput = context.ReadValue<Vector2>().y;
-        Debug.Log("Look called");
-    }
+
 }
