@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Grounds:
-  - {fileID: 919132149155446097, guid: 6e4133e0a546ac24aa7dab35942cee19, type: 3}
-  - {fileID: 919132149155446097, guid: bfcb7f290fa09df48b41d8164cddc00b, type: 3}
-  - {fileID: 919132149155446097, guid: eb2b84a4643136843a17ac7284f44480, type: 3}
-  - {fileID: 919132149155446097, guid: d86a7330c9375db45a96077305d1e16b, type: 3}
+  - {fileID: 919132149155446097, guid: 1fd5fb8b8cd6de74a8e714034a8b36af, type: 3}
+  - {fileID: 919132149155446097, guid: d069cfcdfbf93604e933b109c4f8b7eb, type: 3}
+  - {fileID: 919132149155446097, guid: 00fb2e5d971818a40b8c9b71fa700754, type: 3}
+  - {fileID: 919132149155446097, guid: a882f57600b0e7a46aa74e836d75ef63, type: 3}
+  health: 100
 --- !u!65 &7742851194325977527
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -61,5 +62,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.03, y: 0.19, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.03, y: 0.05, z: 3}
+  m_Center: {x: 0, y: -0.1, z: 0}
