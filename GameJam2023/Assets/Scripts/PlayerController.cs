@@ -55,13 +55,17 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed && IsGrounded())
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, _jumpingPower);
+            if(_rb.velocity.y == 0)
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, _jumpingPower);
+            }
+ 
         }
 
-        if (context.canceled && _rb.velocity.y > 0f)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.5f);
-        }
+        //if (context.canceled && _rb.velocity.y > 0f)
+        //{
+        //    _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y * 0.5f);
+        //}
     }
 
     public void Aim(InputAction.CallbackContext context)
@@ -76,16 +80,6 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Debug.DrawRay(groundCheck.position, Vector3.down, Color.red, 1);
-
-        if (Physics.Raycast(groundCheck.position, Vector3.down, _radius, groundLayer))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
+        return Physics.CheckSphere(groundCheck.position, _radius, groundLayer);
     }
 }
