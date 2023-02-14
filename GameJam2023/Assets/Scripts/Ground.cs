@@ -48,7 +48,12 @@ public class Ground : MonoBehaviour
     {
         if (collision.gameObject.tag == "ball")
         {
-            health -= 10;
+            health -= 25;
+        }
+        if (collision.gameObject.tag == "ijspegel")
+        {
+            health -= 20;
+            Destroy(collision.gameObject);
         }
     }
 }
