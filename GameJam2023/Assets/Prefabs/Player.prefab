@@ -186,7 +186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5190098270363410454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.006, y: 0.08, z: 0.069}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -689,7 +689,7 @@ MonoBehaviour:
     m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 2
     m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -923,16 +923,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4557a1a189e995f4581d0da4a0327694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 2800699047771472762}
-  Camera: {fileID: 3393515552670266894}
-  Ball: {fileID: 8463087517682963374}
-  BallParent: {fileID: 6747496201418853096}
-  LineRenderer: {fileID: 5517126664214917998}
-  ReleasePosition: {fileID: 8253501102143974958}
-  ThrowStrength: 50
-  ExplosionDelay: 5
-  LinePoints: 10
-  TimeBetweenPoints: 0.1
+  _animator: {fileID: 2800699047771472762}
+  _camera: {fileID: 3393515552670266894}
+  _rb: {fileID: 8463087517682963374}
+  _ballPrefab: {fileID: 2203999766418993974, guid: 5e7426bc1aa71354e9e82da0ed6a2870, type: 3}
+  _ballParent: {fileID: 6747496201418853096}
+  _lineRenderer: {fileID: 5517126664214917998}
+  _releasePosition: {fileID: 8253501102143974958}
+  _throwStrength: 10
+  _explosionDelay: 5
+  _linePoints: 25
+  _timeBetweenPoints: 0.1
   BallCollisionMask:
     serializedVersion: 2
     m_Bits: 1
