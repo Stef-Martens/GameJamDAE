@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     private float _maxSpeed = 5f;
 
     private Rigidbody _rb;
-    private Animator _animator;
 
     private InputActionAsset _inputAsset;
     private InputActionMap _player;
@@ -35,13 +34,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 _forceDirection = Vector3.zero;
 
     public LayerMask groundLayer;
+    public bool canMove = true;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _inputAsset = GetComponentInParent<PlayerInput>().actions;
         _player = _inputAsset.FindActionMap("Player");
-        _animator= GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -63,39 +62,26 @@ public class PlayerController : MonoBehaviour
         _player.Disable();
     }
 
-    //private void Update()
-    //{
-    //    //animating
-    //    float velocityZ = Vector3.Dot(_forceDirection.normalized, transform.forward);
-    //    float velocityX = Vector3.Dot(_forceDirection.normalized, transform.right);
-
-    //    _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
-    //    _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
-    //}
-
     private void FixedUpdate()
     {
-        _forceDirection += _horizontalInput * GetCameraRight(_camera) * _movementForce;
-        _forceDirection += _verticalInput * GetCameraForward(_camera) * _movementForce;
+        if(canMove)
+        {
+            _forceDirection += _horizontalInput * GetCameraRight(_camera) * _movementForce;
+            _forceDirection += _verticalInput * GetCameraForward(_camera) * _movementForce;
 
-        _rb.AddForce(_forceDirection, ForceMode.Impulse);
-        _forceDirection = Vector3.zero;
+            _rb.AddForce(_forceDirection, ForceMode.Impulse);
+            _forceDirection = Vector3.zero;
 
-        if (_rb.velocity.y < 0f)
-            _rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
+            if (_rb.velocity.y < 0f)
+                _rb.velocity -= Vector3.down * Physics.gravity.y * Time.fixedDeltaTime;
 
-        Vector3 horizontalVelocity = _rb.velocity;
-        horizontalVelocity.y = 0;
-        if (horizontalVelocity.sqrMagnitude > _maxSpeed * _maxSpeed)
-            _rb.velocity = horizontalVelocity.normalized * _maxSpeed + Vector3.up * _rb.velocity.y;
+            Vector3 horizontalVelocity = _rb.velocity;
+            horizontalVelocity.y = 0;
+            if (horizontalVelocity.sqrMagnitude > _maxSpeed * _maxSpeed)
+                _rb.velocity = horizontalVelocity.normalized * _maxSpeed + Vector3.up * _rb.velocity.y;
 
-        LookAt();
-
-        float velocityZ = Vector3.Dot(_forceDirection.normalized, transform.forward);
-        float velocityX = Vector3.Dot(_forceDirection.normalized, transform.right);
-
-        _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
-        _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
+            LookAt();
+        }
     }
 
     public void Join(InputAction.CallbackContext context)
