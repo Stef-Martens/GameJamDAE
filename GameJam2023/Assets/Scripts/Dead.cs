@@ -7,6 +7,8 @@ public class Dead : MonoBehaviour
 {
     public static List<string> leaderboard;
 
+    int deadcount = 0;
+
     void Start()
     {
         leaderboard = new List<string>();
@@ -16,11 +18,21 @@ public class Dead : MonoBehaviour
         if (collision.gameObject.transform.parent.gameObject.tag == "Playerke")
         {
             leaderboard.Insert(0, collision.gameObject.transform.parent.name);
+
+            collision.gameObject.transform.parent.gameObject.GetComponent<DeadPlayer>().Dead = true;
             Destroy(collision.gameObject.transform.parent.gameObject);
 
-            if (GameObject.FindGameObjectsWithTag("Playerke").Length == leaderboard.Count + 1)
+            deadcount++;
+
+
+            if (GameObject.FindGameObjectsWithTag("Playerke").Length - 1 == deadcount)
             {
-                leaderboard.Insert(0, GameObject.FindGameObjectWithTag("Playerke").gameObject.name);
+                foreach (var item in GameObject.FindGameObjectsWithTag("Playerke"))
+                {
+                    if (!item.GetComponent<DeadPlayer>().Dead)
+                        leaderboard.Insert(0, item.name);
+                }
+
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }

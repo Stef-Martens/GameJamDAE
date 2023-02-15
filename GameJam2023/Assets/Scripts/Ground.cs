@@ -46,9 +46,10 @@ public class Ground : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "ball")
+        if (collision.gameObject.tag == "ball" && !collision.gameObject.GetComponent<Ball>().onGround)
         {
             health -= 25;
+            collision.gameObject.GetComponent<Ball>().onGround = true;
         }
         if (collision.gameObject.tag == "ijspegel")
         {
