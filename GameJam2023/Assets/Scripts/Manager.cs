@@ -21,7 +21,7 @@ public class Manager : MonoBehaviour
 
     public Text TimerText;
 
-    bool startIjs = true;
+    bool startGame = true;
 
     void Update()
     {
@@ -79,14 +79,15 @@ public class Manager : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("InputManager").GetComponent<PlayerInputManager>().DisableJoining();
         TimerText.enabled = false;
-        foreach (var player in GameObject.FindGameObjectsWithTag("Playerke"))
+
+        if (startGame)
         {
-            player.transform.GetChild(0).GetComponent<PlayerController>().canMove = true;
-        }
-        if (startIjs)
-        {
-            InvokeRepeating("SpawnObject", 0, 4);
-            startIjs = false;
+            foreach (var player in GameObject.FindGameObjectsWithTag("Playerke"))
+            {
+                player.transform.GetChild(0).GetComponent<PlayerController>().canMove = true;
+            }
+            InvokeRepeating("SpawnObject", 0, 1);
+            startGame = false;
         }
     }
 

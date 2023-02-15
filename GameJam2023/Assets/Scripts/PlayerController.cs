@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(canMove)
+        if (canMove)
         {
             _forceDirection += _horizontalInput * GetCameraRight(_camera) * _movementForce;
             _forceDirection += _verticalInput * GetCameraForward(_camera) * _movementForce;
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     public void Join(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
         }
     }
@@ -116,6 +116,17 @@ public class PlayerController : MonoBehaviour
     public void Throw(InputAction.CallbackContext context)
     {
 
+    }
+
+    public void Stunned()
+    {
+        canMove = false;
+        Invoke("StartAgain", 2f);
+    }
+
+    void StartAgain()
+    {
+        canMove = true;
     }
 
     private void LookAt()
@@ -151,4 +162,4 @@ public class PlayerController : MonoBehaviour
 
 
 }
-    
+

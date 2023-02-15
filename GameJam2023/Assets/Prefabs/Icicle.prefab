@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 3067247770466548909}
   - component: {fileID: 5675493127808578042}
   - component: {fileID: -4032851744131806787}
+  - component: {fileID: -2685424240182185061}
   m_Layer: 0
   m_Name: Icicle
   m_TagString: ijspegel
@@ -127,8 +128,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.001, y: 0.2, z: 0.001}
+  m_Size: {x: 0.01, y: 0.2, z: 0.01}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-2685424240182185061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439505364630382103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d553143cba35b894e946979373d2a571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2752166101042492836
 GameObject:
   m_ObjectHideFlags: 0
