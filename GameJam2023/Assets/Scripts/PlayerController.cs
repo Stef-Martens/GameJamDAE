@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private InputActionMap _player;
     private InputAction _move;
 
+    private Animator _animator;
+
     private Vector3 _forceDirection = Vector3.zero;
 
     public LayerMask groundLayer;
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _inputAsset = GetComponentInParent<PlayerInput>().actions;
         _player = _inputAsset.FindActionMap("Player");
+        _animator= GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -103,6 +106,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_rb.velocity.y == 0)
             {
+                _animator.SetTrigger("jump");
                 _forceDirection += Vector3.up * _jumpingPower;
             }
         }
@@ -115,7 +119,10 @@ public class PlayerController : MonoBehaviour
 
     public void Throw(InputAction.CallbackContext context)
     {
-
+        if(context.performed)
+        {
+            _animator.SetTrigger("throw");
+        }
     }
 
     public void Stunned()
