@@ -21,6 +21,7 @@ public class Manager : MonoBehaviour
 
     public Text TimerText;
 
+    bool startIjs = true;
 
     void Update()
     {
@@ -40,6 +41,13 @@ public class Manager : MonoBehaviour
             }
         }
 
+        if (timer > 0)
+        {
+            foreach (var player in GameObject.FindGameObjectsWithTag("Playerke"))
+            {
+                player.transform.GetChild(0).GetComponent<PlayerController>().canMove = false;
+            }
+        }
 
         if (timerStarted)
         {
@@ -51,16 +59,14 @@ public class Manager : MonoBehaviour
                 timerStarted = false; // Stop the timer
             }
         }
+        else if (timer > 0)
+            TimerText.text = "Waiting for more players!";
 
         if (GameObject.FindGameObjectsWithTag("Playerke").Length > 1)
         {
             StartTimer();
         }
-        else
-        {
-            // wachten + movement stop
-            // ....
-        }
+
     }
 
     public void StartTimer()
@@ -73,19 +79,20 @@ public class Manager : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("InputManager").GetComponent<PlayerInputManager>().DisableJoining();
         TimerText.enabled = false;
-        // movement starten
-        // ...
+        foreach (var player in GameObject.FindGameObjectsWithTag("Playerke"))
+        {
+            player.transform.GetChild(0).GetComponent<PlayerController>().canMove = true;
+        }
+        if (startIjs)
+        {
+            InvokeRepeating("SpawnObject", 0, 4);
+            startIjs = false;
+        }
     }
-
-    void Start()
-    {
-        InvokeRepeating("SpawnObject", 0, 5);
-    }
-
 
     void SpawnObject()
     {
-        Vector3 spawnPosition = new Vector3(Random.Range(-xRange, xRange), 10, Random.Range(-zRange, zRange));
+        Vector3 spawnPosition = new Vector3(Random.Range(-xRange, xRange), 30, Random.Range(-zRange, zRange));
         Instantiate(Ijspegel, spawnPosition, Quaternion.identity);
     }
 }

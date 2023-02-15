@@ -52,7 +52,7 @@ public class Ground : MonoBehaviour
         }
         if (collision.gameObject.tag == "ijspegel")
         {
-            health -= 20;
+            health -= 25;
             Destroy(collision.gameObject);
         }
     }
