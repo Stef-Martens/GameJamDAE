@@ -106,8 +106,8 @@ public class PlayerController : MonoBehaviour
         {
             if (_rb.velocity.y == 0)
             {
-                _animator.SetTrigger("jump");
                 _forceDirection += Vector3.up * _jumpingPower;
+                _animator.SetTrigger("jump");
             }
         }
     }
