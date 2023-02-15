@@ -63,15 +63,15 @@ public class PlayerController : MonoBehaviour
         _player.Disable();
     }
 
-    private void Update()
-    {
-        //animating
-        float velocityZ = Vector3.Dot(_forceDirection.normalized, transform.forward);
-        float velocityX = Vector3.Dot(_forceDirection.normalized, transform.right);
+    //private void Update()
+    //{
+    //    //animating
+    //    float velocityZ = Vector3.Dot(_forceDirection.normalized, transform.forward);
+    //    float velocityX = Vector3.Dot(_forceDirection.normalized, transform.right);
 
-        _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
-        _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
-    }
+    //    _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
+    //    _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
+    //}
 
     private void FixedUpdate()
     {
@@ -90,6 +90,12 @@ public class PlayerController : MonoBehaviour
             _rb.velocity = horizontalVelocity.normalized * _maxSpeed + Vector3.up * _rb.velocity.y;
 
         LookAt();
+
+        float velocityZ = Vector3.Dot(_forceDirection.normalized, transform.forward);
+        float velocityX = Vector3.Dot(_forceDirection.normalized, transform.right);
+
+        _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
+        _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
     }
 
     public void Join(InputAction.CallbackContext context)
