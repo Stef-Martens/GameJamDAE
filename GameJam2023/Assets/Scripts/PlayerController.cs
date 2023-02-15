@@ -16,10 +16,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _jumpingPower;
     [SerializeField]
-    private float _throwDistance;
-    [SerializeField]
-    private float _throwSpeed;
-    [SerializeField]
     private float _radius;
     [SerializeField]
     private Camera _camera;
@@ -30,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private float _maxSpeed = 5f;
 
     private Rigidbody _rb;
+    private Animator _animator;
 
     private InputActionAsset _inputAsset;
     private InputActionMap _player;
@@ -38,14 +35,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 _forceDirection = Vector3.zero;
 
     public LayerMask groundLayer;
-    private float _xRotation;
-    private float _yRotation;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _inputAsset = GetComponentInParent<PlayerInput>().actions;
         _player = _inputAsset.FindActionMap("Player");
+        _animator= GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -69,7 +65,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        _camTarget.transform.rotation *= Quaternion.AngleAxis(_xRotation * _speed, Vector3.up);
+        //animating
+        float velocityZ = Vector3.Dot(_forceDirection.normalized, transform.forward);
+        float velocityX = Vector3.Dot(_forceDirection.normalized, transform.right);
+
+        _animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
+        _animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
     }
 
     private void FixedUpdate()

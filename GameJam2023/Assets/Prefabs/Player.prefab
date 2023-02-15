@@ -381,6 +381,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6704560157297127848, guid: a15133d8898d400449f7c21aef33e511, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: c11091210ed221e47ad83e441f1b40de, type: 3}
+    - target: {fileID: 6704560157297127848, guid: a15133d8898d400449f7c21aef33e511, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: be667445bb4e12245a63fc005dc9da15, type: 2}
+    - target: {fileID: 6704560157297127848, guid: a15133d8898d400449f7c21aef33e511, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6704560157297127848, guid: a15133d8898d400449f7c21aef33e511, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a15133d8898d400449f7c21aef33e511, type: 3}
 --- !u!4 &2740033460263087801 stripped
@@ -440,8 +456,6 @@ MonoBehaviour:
   _speed: 10
   _jumpHeight: 5
   _jumpingPower: 5
-  _throwDistance: 0
-  _throwSpeed: 0
   _radius: 0.5
   _camera: {fileID: 3393515552670266894}
   groundLayer:
