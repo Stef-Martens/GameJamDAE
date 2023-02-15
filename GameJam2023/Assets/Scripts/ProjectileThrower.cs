@@ -13,6 +13,8 @@ public class ProjectileThrower : MonoBehaviour
     [SerializeField]
     private Rigidbody Ball;
     [SerializeField]
+    private Transform BallParent;
+    [SerializeField]
     private LineRenderer LineRenderer;
     [SerializeField]
     private Transform ReleasePosition;
@@ -23,8 +25,6 @@ public class ProjectileThrower : MonoBehaviour
     [SerializeField]
     [Range(1, 10)]
     private float ExplosionDelay = 5f;
-    [SerializeField]
-    private GameObject ExplosionParticleSystem;
     [Header("Display Controls")]
     [SerializeField]
     [Range(10, 100)]
@@ -37,8 +37,8 @@ public class ProjectileThrower : MonoBehaviour
     private Vector3 InitialLocalPosition;
     private Quaternion InitialRotation;
 
-    private bool IsGrenadeThrowAvailable = true;
-    private LayerMask GrenadeCollisionMask;
+    private bool IsBallThrowAvailable = true;
+    public LayerMask BallCollisionMask;
 
     private void Awake()
     {
@@ -46,13 +46,14 @@ public class ProjectileThrower : MonoBehaviour
         InitialRotation = Ball.transform.localRotation;
         InitialLocalPosition = Ball.transform.localPosition;
         Ball.freezeRotation = true;
+        Ball.gameObject.SetActive(false);
 
-        int grenadeLayer = Ball.gameObject.layer;
+        int ballLayer = Ball.gameObject.layer;
         for (int i = 0; i < 32; i++)
         {
-            if (!Physics.GetIgnoreLayerCollision(grenadeLayer, i))
+            if (!Physics.GetIgnoreLayerCollision(ballLayer, i))
             {
-                GrenadeCollisionMask |= 1 << i; // magic
+                BallCollisionMask |= 1 << i; // magic
             }
         }
     }
@@ -69,10 +70,11 @@ public class ProjectileThrower : MonoBehaviour
 
             DrawProjection();
 
-            if (Mouse.current.leftButton.wasReleasedThisFrame && IsGrenadeThrowAvailable)
+            if (Mouse.current.leftButton.wasReleasedThisFrame && IsBallThrowAvailable)
             {
-                IsGrenadeThrowAvailable = false;
-                Animator.SetTrigger("Throw Grenade");
+                IsBallThrowAvailable = false;
+                Animator.SetTrigger("throw");
+                ReleaseBall();
             }
         }
         else
@@ -103,7 +105,7 @@ public class ProjectileThrower : MonoBehaviour
                 (point - lastPosition).normalized,
                 out RaycastHit hit,
                 (point - lastPosition).magnitude,
-                GrenadeCollisionMask))
+                BallCollisionMask))
             {
                 LineRenderer.SetPosition(i, hit.point);
                 LineRenderer.positionCount = i + 1;
@@ -112,30 +114,33 @@ public class ProjectileThrower : MonoBehaviour
         }
     }
 
-    private void ReleaseGrenade()
+    private void ReleaseBall()
     {
-        Ball.velocity = Vector3.zero;
-        Ball.angularVelocity = Vector3.zero;
-        Ball.isKinematic = false;
-        Ball.freezeRotation = false;
-        Ball.transform.SetParent(null, true);
-        Ball.AddForce(Camera.transform.forward * ThrowStrength, ForceMode.Impulse);
-        //StartCoroutine(ExplodeGrenade());
+        //maak clone en instantiate
+        //Ball.velocity = Vector3.zero;
+        //Ball.angularVelocity = Vector3.zero;
+        //Ball.isKinematic = false;
+        //Ball.freezeRotation = false;
+        //Ball.constraints = RigidbodyConstraints.None;
+        //Ball.transform.SetParent(null, true);
+        //Ball.AddForce(Camera.transform.forward * ThrowStrength, ForceMode.Impulse);
+        Ball.gameObject.SetActive(false);
     }
 
-    //private IEnumerator ExplodeGrenade()
-    //{
-    //    yield return new WaitForSeconds(ExplosionDelay);
+    private void PickUpBall()
+    {
+        Ball.constraints = RigidbodyConstraints.FreezePosition;
+    }
 
-    //    Instantiate(ExplosionParticleSystem, Grenade.transform.position, Quaternion.identity);
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(!collision.gameObject.CompareTag("ball"))
+        {
+            return;
+        }
 
-    //    Grenade.GetComponent<Cinemachine.CinemachineImpulseSource>().GenerateImpulse(new Vector3(Random.Range(-1, 1), Random.Range(0.5f, 1), Random.Range(-1, 1)));
+        Destroy(collision.gameObject);
+        Ball.gameObject.SetActive(true);
+    }
 
-    //    Grenade.freezeRotation = true;
-    //    Grenade.isKinematic = true;
-    //    Grenade.transform.SetParent(InitialParent, false);
-    //    Grenade.rotation = InitialRotation;
-    //    Grenade.transform.localPosition = InitialLocalPosition;
-    //    IsGrenadeThrowAvailable = true;
-    //}
 }
