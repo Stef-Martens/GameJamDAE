@@ -40,7 +40,6 @@ public class PlayerManager : MonoBehaviour
 
         //convert layer mask (bit) to an integer 
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
-
         //set the layer
         playerParent.GetComponentInChildren<CinemachineFreeLook>().gameObject.layer = layerToAdd;
         //add the layer
