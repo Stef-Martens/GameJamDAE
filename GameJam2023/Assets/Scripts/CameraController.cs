@@ -7,27 +7,43 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField]
-    private Camera cam;
-    [SerializeField]
-    private GameObject virtualPlayerCam;
+    public Transform playerTransform;
+    private Vector3 _cameraOffset;
 
-    void Start()
+    [Range(0.01f, 1.0f)]
+    public float SmoothFactor = 0.5f;
+
+    public bool lookAtPlayer = false;
+    public bool rotateAroundPlayer = true;
+    public float rotationSpeed = 5.0f;
+    private float _xRotation;
+    private float _yRotation;
+
+    private void Start()
     {
-        PlayerController[] playerAmount = FindObjectsOfType<PlayerController>();
-        int layer = playerAmount.Length + 7;
+        _cameraOffset = transform.position - playerTransform.position;
+    }
 
-        virtualPlayerCam.layer = layer;
+    private void LateUpdate()
+    {
+        if(rotateAroundPlayer)
+        {
+            Quaternion camTurnAngle = Quaternion.AngleAxis(_xRotation * rotationSpeed, Vector3.up);
 
-        var bitMask = (1 << layer)
-            | (1 << 0)
-            | (1 << 1)
-            | (1 << 2)
-            | (1 << 4)
-            | (1 << 5)
-            | (1 << 8);
+            _cameraOffset = camTurnAngle* _cameraOffset;
+        }
 
-        cam.cullingMask = bitMask;
-        cam.gameObject.layer = layer;
+        Vector3 newPos = playerTransform.position + _cameraOffset;
+        transform.position = Vector3.Slerp(transform.position, newPos, SmoothFactor);
+
+        if (lookAtPlayer || rotateAroundPlayer)
+            transform.LookAt(playerTransform);
+                        
+    }
+
+    public void Look(InputAction.CallbackContext context)
+    {
+        _xRotation = context.ReadValue<Vector2>().x;
+        _yRotation = context.ReadValue<Vector2>().y;
     }
 }

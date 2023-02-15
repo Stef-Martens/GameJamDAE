@@ -6,7 +6,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private Transform groundCheck;
+    private Transform _groundCheck;
+    [SerializeField]
+    private Transform _camTarget;
     [SerializeField]
     private float _speed;
     [SerializeField]
@@ -23,20 +25,21 @@ public class PlayerController : MonoBehaviour
     private Camera _camera;
 
     private float _horizontalInput;
-    private Rigidbody _rb;
-
-    public LayerMask groundLayer;
     private float _verticalInput;
-    private PlayerInput _playerInput;
-    private float _horizontalRotation;
-    private float _verticalRotation;
+    private float _movementForce = 1f;
     private float _maxSpeed = 5f;
+
+    private Rigidbody _rb;
 
     private InputActionAsset _inputAsset;
     private InputActionMap _player;
     private InputAction _move;
+
     private Vector3 _forceDirection = Vector3.zero;
-    private float _movementForce = 1f;
+
+    public LayerMask groundLayer;
+    private float _xRotation;
+    private float _yRotation;
 
     private void Awake()
     {
@@ -64,10 +67,10 @@ public class PlayerController : MonoBehaviour
         _player.Disable();
     }
 
-    //private void Update()
-    //{
-    //    _rb.velocity = new Vector3(_horizontalInput * _speed, _rb.velocity.y, _verticalInput * _speed);
-    //}
+    private void Update()
+    {
+        _camTarget.transform.rotation *= Quaternion.AngleAxis(_xRotation * _speed, Vector3.up);
+    }
 
     private void FixedUpdate()
     {
@@ -149,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.CheckSphere(groundCheck.position, _radius, groundLayer);
+        return Physics.CheckSphere(_groundCheck.position, _radius, groundLayer);
     }
 
 
