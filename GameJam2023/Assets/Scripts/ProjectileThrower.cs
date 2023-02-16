@@ -23,15 +23,7 @@ public class ProjectileThrower : MonoBehaviour
     [Header("Ball Controls")]
     [SerializeField]
     [Range(1, 100)]
-    private float _maxThrowStrength = 30f;
-    [SerializeField]
-    [Range(1, 20)]
-    private float _minThrowStrength = 10f;
-    [SerializeField]
-    [Range(0.01f, 1f)]
-    private float _throwStrengthIncrease = 0.1f;
-
-    private float _throwStrength;
+    private float _throwStrength = 10f;
     [SerializeField]
     [Range(1, 10)]
     private float _explosionDelay = 5f;
@@ -73,11 +65,6 @@ public class ProjectileThrower : MonoBehaviour
 
     private void Update()
     {
-        if (_isAiming & !_isThrowing)
-        {
-            ChargeShot();
-        }
-
         if (Application.isFocused && _isAiming)
         {
             _animator.transform.rotation = Quaternion.Euler(
@@ -110,13 +97,7 @@ public class ProjectileThrower : MonoBehaviour
         else
         {
             _isAiming = false;
-            _throwStrength = _minThrowStrength;
         }
-    }
-    private void ChargeShot()
-    {
-        if (_throwStrength < _maxThrowStrength)
-            _throwStrength += _throwStrengthIncrease;
     }
 
     public void Throw(InputAction.CallbackContext context)
@@ -174,7 +155,6 @@ public class ProjectileThrower : MonoBehaviour
             rb.transform.SetParent(null, true);
             rb.AddForce(_camera.transform.forward * _throwStrength, ForceMode.Impulse);
             _pickedUpBall = false;
-            _throwStrength = _minThrowStrength;
         }
 
         IsBallThrowAvailable = true;
