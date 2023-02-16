@@ -89,7 +89,7 @@ public class Manager : MonoBehaviour
             {
                 player.transform.GetChild(0).GetComponent<PlayerController>().canMove = true;
             }
-            InvokeRepeating("SpawnObject", 0, 0.5f);
+            InvokeRepeating("SpawnObject", 0, 0.3f);
 
             Players = GameObject.FindGameObjectsWithTag("Playerke");
 

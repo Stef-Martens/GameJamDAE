@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _orbitY: {fileID: 6042636718434692286}
   _player: {fileID: 8896272317923722170}
-  _speed: 0.18
+  _speed: 1
 --- !u!1 &142939771901985364
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,7 +993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundCheck: {fileID: 7640481892496444085}
   _camTarget: {fileID: 1943875573}
-  _speed: 10
+  _speed: 50
   _jumpHeight: 8
   _jumpingPower: 5
   _radius: 1
