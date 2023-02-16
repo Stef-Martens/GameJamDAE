@@ -65,7 +65,7 @@ public class ProjectileThrower : MonoBehaviour
 
     private void Update()
     {
-        if (Application.isFocused && Mouse.current.rightButton.isPressed)
+        if (Application.isFocused && /*Mouse.current.rightButton.isPressed*/_isAiming)
         {
             _animator.transform.rotation = Quaternion.Euler(
                 _animator.transform.eulerAngles.x,
@@ -75,32 +75,44 @@ public class ProjectileThrower : MonoBehaviour
 
             DrawProjection();
 
-            if (Mouse.current.leftButton.wasReleasedThisFrame && IsBallThrowAvailable)
+            if (/*Mouse.current.leftButton.wasReleasedThisFrame*/_isThrowing && IsBallThrowAvailable)
             {
                 IsBallThrowAvailable = false;
                 _animator.SetTrigger("throw");
+                _isThrowing = false;
             }
         }
         else
         {
             _lineRenderer.enabled = false;
         }
+
+        Debug.Log(_isAiming);
     }
 
     public void Aim(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if(context.action.IsPressed())
         {
-            _isAiming = true;
+            _isAiming= true;
+        }
+        else
+        {
+            _isAiming = false;
         }
     }
 
     public void Throw(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if(context.action.WasReleasedThisFrame())
         {
             _isThrowing = true;
         }
+
+        //if(context.performed)
+        //{
+        //    _isThrowing = false;
+        //}
     }
 
     private void DrawProjection()
