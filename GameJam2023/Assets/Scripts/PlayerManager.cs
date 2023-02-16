@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviour
         //need to use the parent due to the structure of the prefab
         Transform playerParent = player.transform.parent;
         //commented out till i add spawnpoints
-        playerParent.position = startingPoints[players.Count - 1].position;
+        //playerParent.position = startingPoints[players.Count - 1].position;
 
         //convert layer mask (bit) to an integer 
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);

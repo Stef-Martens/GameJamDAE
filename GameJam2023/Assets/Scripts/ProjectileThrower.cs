@@ -43,6 +43,7 @@ public class ProjectileThrower : MonoBehaviour
     public LayerMask BallCollisionMask;
     private bool _isAiming;
     private bool _isThrowing;
+    private bool _pickedUpBall;
 
     private void Awake()
     {
@@ -135,19 +136,23 @@ public class ProjectileThrower : MonoBehaviour
 
     public void ReleaseBall()
     {
-        _rb.gameObject.SetActive(false);
-        GameObject ball = Instantiate(_ballPrefab, _releasePosition.position, Quaternion.identity);
-        ball.tag = "ball";
-        Rigidbody rb = ball.GetComponent<Rigidbody>();
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.isKinematic =false;
-        rb.freezeRotation = false;
-        rb.constraints = RigidbodyConstraints.None;
-        rb.transform.SetParent(null, true);
-        rb.AddForce(_camera.transform.forward * _throwStrength, ForceMode.Impulse);
-        
-        IsBallThrowAvailable= true;
+        if(_pickedUpBall)
+        {
+            _rb.gameObject.SetActive(false);
+            GameObject ball = Instantiate(_ballPrefab, _releasePosition.position, Quaternion.identity);
+            ball.tag = "ball";
+            Rigidbody rb = ball.GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = false;
+            rb.freezeRotation = false;
+            rb.constraints = RigidbodyConstraints.None;
+            rb.transform.SetParent(null, true);
+            rb.AddForce(_camera.transform.forward * _throwStrength, ForceMode.Impulse);
+            _pickedUpBall = false;
+        }
+
+        IsBallThrowAvailable = true;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -157,6 +162,7 @@ public class ProjectileThrower : MonoBehaviour
             return;
         }
 
+        _pickedUpBall = true;
         Destroy(collision.gameObject);
         _rb.gameObject.SetActive(true);
     }
