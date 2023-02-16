@@ -276,7 +276,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Jump
     m_StateMachine: {fileID: -6225804800227873463}
-    m_Mask: {fileID: 31900000, guid: 0cd063139ae44f64e80ebaf7412def91, type: 2}
+    m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -370,7 +370,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: d044c2c80e12b8442b996d0e7b6f0a95, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: d946f93acbc45914b8a7009381c0b40d, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

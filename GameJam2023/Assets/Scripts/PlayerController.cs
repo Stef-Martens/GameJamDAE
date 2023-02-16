@@ -132,6 +132,7 @@ public class PlayerController : MonoBehaviour
     public void Stunned()
     {
         canMove = false;
+        _animator.SetTrigger("stun");
         Invoke("StartAgain", 2f);
     }
 
