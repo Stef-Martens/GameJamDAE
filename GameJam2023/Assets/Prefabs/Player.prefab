@@ -960,7 +960,7 @@ MonoBehaviour:
   _ballParent: {fileID: 6747496201418853096}
   _lineRenderer: {fileID: 5517126664214917998}
   _releasePosition: {fileID: 8253501102143974958}
-  _throwStrength: 10
+  _throwStrength: 20
   _explosionDelay: 5
   _linePoints: 25
   _timeBetweenPoints: 0.1

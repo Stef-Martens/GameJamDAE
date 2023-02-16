@@ -102,11 +102,15 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if(context.started)
+        {
+            _animator.SetTrigger("jump");
+        }
+
         if (context.performed && IsGrounded())
         {
             if (_rb.velocity.y == 0)
             {
-                _animator.SetTrigger("jump");
                 _forceDirection += Vector3.up * _jumpingPower;
             }
         }

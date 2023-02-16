@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ProjectileThrower : MonoBehaviour
+public class Thrower : MonoBehaviour
 {
     [Header("Scene References")]
     [SerializeField]
@@ -24,6 +24,16 @@ public class ProjectileThrower : MonoBehaviour
     [SerializeField]
     [Range(1, 100)]
     private float _throwStrength = 10f;
+    [SerializeField]
+    [Range(10, 100)]
+    private float _maxThrowStrength = 100;
+
+    [SerializeField]
+    [Range(0, 10)]
+    private float _minThrowStrength = 0;
+
+    private float _currentThrowStrength;
+
     [SerializeField]
     [Range(1, 10)]
     private float _explosionDelay = 5f;
@@ -90,9 +100,10 @@ public class ProjectileThrower : MonoBehaviour
 
     public void Aim(InputAction.CallbackContext context)
     {
-        if(context.action.IsPressed())
+        if (context.action.IsPressed())
         {
-            _isAiming= true;
+            _isAiming = true;
+            IncreaseCharge();
         }
         else
         {
@@ -100,9 +111,15 @@ public class ProjectileThrower : MonoBehaviour
         }
     }
 
+    private void IncreaseCharge()
+    {
+        if (_currentThrowStrength < _maxThrowStrength)
+            _currentThrowStrength += 1;
+    }
+
     public void Throw(InputAction.CallbackContext context)
     {
-        if(context.action.WasReleasedThisFrame())
+        if (context.action.WasReleasedThisFrame())
         {
             _isThrowing = true;
         }
@@ -113,7 +130,7 @@ public class ProjectileThrower : MonoBehaviour
         _lineRenderer.enabled = true;
         _lineRenderer.positionCount = Mathf.CeilToInt(_linePoints / _timeBetweenPoints) + 1;
         Vector3 startPosition = _releasePosition.position;
-        Vector3 startVelocity = _throwStrength * _camera.transform.forward / _rb.mass;
+        Vector3 startVelocity = _currentThrowStrength * _camera.transform.forward / _rb.mass;
         int i = 0;
         _lineRenderer.SetPosition(i, startPosition);
         for (float time = 0; time < _linePoints; time += _timeBetweenPoints)
@@ -141,7 +158,7 @@ public class ProjectileThrower : MonoBehaviour
 
     public void ReleaseBall()
     {
-        if(_pickedUpBall)
+        if (_pickedUpBall)
         {
             _rb.gameObject.SetActive(false);
             GameObject ball = Instantiate(_ballPrefab, _releasePosition.position, Quaternion.identity);
@@ -153,7 +170,7 @@ public class ProjectileThrower : MonoBehaviour
             rb.freezeRotation = false;
             rb.constraints = RigidbodyConstraints.None;
             rb.transform.SetParent(null, true);
-            rb.AddForce(_camera.transform.forward * _throwStrength, ForceMode.Impulse);
+            rb.AddForce(_camera.transform.forward * _currentThrowStrength, ForceMode.Impulse);
             _pickedUpBall = false;
         }
 
@@ -162,7 +179,7 @@ public class ProjectileThrower : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!collision.gameObject.CompareTag("ball"))
+        if (!collision.gameObject.CompareTag("ball"))
         {
             return;
         }
@@ -171,5 +188,6 @@ public class ProjectileThrower : MonoBehaviour
         Destroy(collision.gameObject);
         _rb.gameObject.SetActive(true);
     }
-
 }
+
+
