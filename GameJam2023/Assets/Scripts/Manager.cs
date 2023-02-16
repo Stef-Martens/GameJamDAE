@@ -16,7 +16,7 @@ public class Manager : MonoBehaviour
     int playerCount = 1;
 
 
-    private float timer = 2.0f;
+    private float timer = 5.0f;
     private bool timerStarted = false;
 
     public Text TimerText;
@@ -89,7 +89,7 @@ public class Manager : MonoBehaviour
             {
                 player.transform.GetChild(0).GetComponent<PlayerController>().canMove = true;
             }
-            InvokeRepeating("SpawnObject", 0, 1);
+            InvokeRepeating("SpawnObject", 0, 0.5f);
 
             Players = GameObject.FindGameObjectsWithTag("Playerke");
 
