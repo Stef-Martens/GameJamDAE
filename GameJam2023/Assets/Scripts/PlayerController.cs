@@ -87,6 +87,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(!canMove)
+        {
+            _animator.SetTrigger("stun");
+        }
+    }
     public void Join(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -132,7 +139,6 @@ public class PlayerController : MonoBehaviour
     public void Stunned()
     {
         canMove = false;
-        _animator.SetTrigger("stun");
         Invoke("StartAgain", 2f);
     }
 
