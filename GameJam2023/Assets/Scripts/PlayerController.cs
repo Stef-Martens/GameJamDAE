@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
         _rb.isKinematic = true;
         canMove = false;
         _cameraRotation.canRotateCam = false;
-        _timeToWakeUp = 3f;
+        _timeToWakeUp = 3.5f;
     }
 
     private void DisableRagDoll()
@@ -277,13 +277,11 @@ public class PlayerController : MonoBehaviour
 
         if(_timeToWakeUp <= 0)
         {
-            RealignPositionToHips();
+            AlignRotationToHips();
+            AlignPositionToHips();
             PopulateBoneTransforms(_ragdollBoneTransforms);
-
-            _currentState = PlayerState.StandingUp;
-            DisableRagDoll();
-
-            _animator.Play(_standUpStateName);
+            _currentState = PlayerState.ResettingBones;
+            _elapsedResetBonesTime = 0;
         }
     }
 
@@ -297,13 +295,56 @@ public class PlayerController : MonoBehaviour
 
     private void ResettingBonesBehaviour()
     {
+        _elapsedResetBonesTime += Time.deltaTime;
+        float elapsedPercentage = _elapsedResetBonesTime / _timeToResetBones;
 
+        for(int boneIndex = 0; boneIndex< _bones.Length; boneIndex++)
+        {
+            _bones[boneIndex].localPosition = Vector3.Lerp(
+                _ragdollBoneTransforms[boneIndex].Position,
+                _standUpBoneTransforms[boneIndex].Position,
+                elapsedPercentage );
+
+            _bones[boneIndex].localRotation = Quaternion.Lerp(
+                _ragdollBoneTransforms[boneIndex].Rotation,
+                _standUpBoneTransforms[boneIndex].Rotation,
+                elapsedPercentage );
+        }
+
+        if(elapsedPercentage >= 1)
+        {
+            _currentState = PlayerState.StandingUp;
+            DisableRagDoll();
+
+            _animator.Play(_standUpStateName);
+        }
     }
 
-    private void RealignPositionToHips()
+    private void AlignRotationToHips()
+    {
+        Vector3 originalHipsPosition = _hipsBone.position;
+        Quaternion originalHipsRotation = _hipsBone.rotation;
+
+        Vector3 desiredDirection = _hipsBone.up * -1;
+        desiredDirection.y = 0;
+        desiredDirection.Normalize();
+
+        Quaternion fromToRotation = Quaternion.FromToRotation(transform.forward, desiredDirection);
+        transform.rotation *= fromToRotation;
+
+        _hipsBone.position = originalHipsPosition;
+        _hipsBone.rotation = originalHipsRotation;
+    }
+
+    private void AlignPositionToHips()
     {
         Vector3 originalHipsPosition = _hipsBone.position;
         transform.position = _hipsBone.position;
+
+        Vector3 positionOffset = _standUpBoneTransforms[0].Position;
+        positionOffset.y = 0;
+        positionOffset = transform.rotation * positionOffset;
+        transform.position -= positionOffset;
 
         //kijken of de geraakte speler nog steeds grounded is
         if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo))

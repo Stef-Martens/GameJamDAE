@@ -1391,6 +1391,8 @@ MonoBehaviour:
   _mainCollider: {fileID: 7806353241025242834}
   _cameraRotation: {fileID: 4709493942501856490}
   _standUpStateName: Stand Up
+  _standUpClipName: Stand Up
+  _timeToResetBones: 0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
