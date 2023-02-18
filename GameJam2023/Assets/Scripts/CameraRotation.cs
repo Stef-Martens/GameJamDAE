@@ -21,11 +21,17 @@ public class CameraRotation : MonoBehaviour
     private float _xIncrease = 0;
     private float _yIncrease = 0;
 
+    public bool canRotateCam;
+
     private void LateUpdate()
     {
         TrackPlayer();
-        RotationY();
-        RotationX();
+
+        if(canRotateCam)
+        {
+            RotationY();
+            RotationX();
+        }
     }
 
     private void TrackPlayer()

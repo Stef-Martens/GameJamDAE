@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour
 
     public bool IsGrounded()
     {
-        return Physics.CheckSphere(transform.position, 0.5f, groundLayer);
+        return Physics.CheckSphere(transform.position, 0.4f, groundLayer);
     }
 
 }

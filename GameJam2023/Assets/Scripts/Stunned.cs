@@ -10,7 +10,7 @@ public class Stunned : MonoBehaviour
         if (collision.gameObject.transform.parent.gameObject.tag == "Playerke")
         {
             // stunned
-            collision.gameObject.GetComponent<PlayerController>().StunPlayer();
+            //collision.gameObject.GetComponent<PlayerController>().StunPlayer();
             Destroy(gameObject);
         }
     }
