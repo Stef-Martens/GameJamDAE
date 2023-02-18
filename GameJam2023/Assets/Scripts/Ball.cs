@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public bool onGround = true;
-    bool inHand = false;
+    public LayerMask groundLayer;
 
-    void OnCollisionEnter(Collision collision)
+    private void FixedUpdate()
     {
-        if (!inHand)
+        if(!IsGrounded())
         {
-            if (onGround)
-            {
-                // ball oprapen en inhand op true
-            }
+            gameObject.tag = "flyingBall";
         }
+        else
+        {
+            gameObject.tag = "ball";
+        }
+    }
+
+    public bool IsGrounded()
+    {
+        return Physics.CheckSphere(transform.position, 0.5f, groundLayer);
     }
 
 }

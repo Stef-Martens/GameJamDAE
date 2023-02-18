@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,24 +7,22 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private Transform _groundCheck;
-    [SerializeField]
     private Transform _camTarget;
     [SerializeField]
-    private float _speed;
+    private float _maxSpeed;
     [SerializeField]
     private float _jumpHeight;
     [SerializeField]
     private float _jumpingPower;
     [SerializeField]
-    private float _radius;
-    [SerializeField]
     private Camera _camera;
+    [SerializeField]
+    private Collider _collider;
 
     private float _horizontalInput;
     private float _verticalInput;
     private float _movementForce = 1f;
-    private float _maxSpeed = 5f;
+    private float _distToGround;
 
     private Rigidbody _rb;
 
@@ -44,6 +43,7 @@ public class PlayerController : MonoBehaviour
         _inputAsset = GetComponentInParent<PlayerInput>().actions;
         _player = _inputAsset.FindActionMap("Player");
         _animator= GetComponent<Animator>();
+        _distToGround = _collider.bounds.extents.y;
     }
 
     private void OnEnable()
@@ -51,8 +51,6 @@ public class PlayerController : MonoBehaviour
         _player.FindAction("Jump").started += Jump;
         _move = _player.FindAction("Move");
         _move.started += Move;
-        _player.FindAction("Aim").started += Aim;
-        _player.FindAction("Throw").started += Throw;
         _player.Enable();
     }
 
@@ -60,8 +58,6 @@ public class PlayerController : MonoBehaviour
     {
         _player.FindAction("Jump").started -= Jump;
         _player.FindAction("Move").started -= Move;
-        _player.FindAction("Aim").started -= Aim;
-        _player.FindAction("Throw").started -= Throw;
         _player.Disable();
     }
 
@@ -69,6 +65,8 @@ public class PlayerController : MonoBehaviour
     {
         if (canMove)
         {
+            _animator.SetFloat("speed", _rb.velocity.magnitude / _maxSpeed);
+
             _forceDirection += _horizontalInput * GetCameraRight(_camera) * _movementForce;
             _forceDirection += _verticalInput * GetCameraForward(_camera) * _movementForce;
 
@@ -89,10 +87,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(!canMove)
-        {
-            _animator.SetTrigger("stun");
-        }
     }
     public void Join(InputAction.CallbackContext context)
     {
@@ -109,40 +103,24 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if(context.started)
-        {
-            _animator.SetTrigger("jump");
-        }
-
         if (context.performed && IsGrounded())
         {
-            if (_rb.velocity.y == 0)
-            {
-                _forceDirection += Vector3.up * _jumpingPower;
-            }
+            _animator.SetBool("IsJumping", true);
+            _forceDirection += Vector3.up * _jumpingPower;
         }
-    }
-
-    public void Aim(InputAction.CallbackContext context)
-    {
-
-    }
-
-    public void Throw(InputAction.CallbackContext context)
-    {
-        if(context.performed)
+        else
         {
-            //_animator.SetTrigger("throw");
+            _animator.SetBool("IsJumping", false);
         }
     }
 
-    public void Stunned()
+    public void StunPlayer()
     {
         canMove = false;
         Invoke("StartAgain", 2f);
     }
 
-    void StartAgain()
+    private void MoveAgain()
     {
         canMove = true;
     }
@@ -174,8 +152,9 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.CheckSphere(_groundCheck.position, _radius, groundLayer);
+        return Physics.Raycast(transform.position, -Vector3.up, _distToGround + 0.1f, groundLayer);
     }
+
 
 
 

@@ -6,43 +6,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
-    private List<PlayerInput> players = new List<PlayerInput>();
-    [SerializeField]
-    private List<Transform> startingPoints;
-    [SerializeField]
-    private List<LayerMask> playerLayers;
-
-    private PlayerInputManager playerInputManager;
-
-    private void Awake()
+    public Transform[] spawnLocations;
+    void OnPlayerJoined(PlayerInput playerInput)
     {
-        playerInputManager = FindObjectOfType<PlayerInputManager>();
+        Debug.Log("PlayerInput ID: " + playerInput.playerIndex);
+        // Set the player ID, add one to the index to start at Player 1
+        playerInput.gameObject.GetComponent<PlayerDetails>().playerID = playerInput.playerIndex + 1;
+
+        // Set the start spawn position of the player using the location at the associated element into the array.
+        playerInput.gameObject.GetComponent<PlayerDetails>().startPos = spawnLocations[playerInput.playerIndex].position;
     }
 
-    private void OnEnable()
-    {
-        playerInputManager.onPlayerJoined += AddPlayer;
-    }
-
-    private void OnDisable()
-    {
-        playerInputManager.onPlayerJoined -= AddPlayer;
-    }
-
-    public void AddPlayer(PlayerInput player)
-    {
-        players.Add(player);
-
-        //need to use the parent due to the structure of the prefab
-        Transform playerParent = player.transform.parent;
-        //commented out till i add spawnpoints
-        //playerParent.position = startingPoints[players.Count - 1].position;
-
-        //convert layer mask (bit) to an integer 
-        int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
-        //set the layer
-        //add the layer
-        //set the action in the custom cinemachine Input Handler
-
-    }
 }
