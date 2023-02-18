@@ -44,17 +44,17 @@ public class Ground : MonoBehaviour
         }
     }
 
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "ball" && !collision.gameObject.GetComponent<Ball>().onGround)
-    //    {
-    //        health -= 25;
-    //        collision.gameObject.GetComponent<Ball>().onGround = true;
-    //    }
-    //    if (collision.gameObject.tag == "ijspegel")
-    //    {
-    //        health -= 25;
-    //        Destroy(collision.gameObject);
-    //    }
-    //}
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("ijspegel"))
+        {
+            health -= 25;
+            Destroy(collision.gameObject);
+        }
+
+        if(collision.gameObject.CompareTag("ball"))
+        {
+            health -= 50;
+        }
+    }
 }

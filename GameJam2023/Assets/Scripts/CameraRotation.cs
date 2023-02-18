@@ -12,7 +12,7 @@ public class CameraRotation : MonoBehaviour
     private GameObject _player;
 
     [SerializeField]
-    [Range(0.1f, 3)]
+    [Range(0.1f, 300)]
     private float _speed;
 
     private float _xRotation = 0;
@@ -21,22 +21,20 @@ public class CameraRotation : MonoBehaviour
     private float _xIncrease = 0;
     private float _yIncrease = 0;
 
-    public bool canRotateCam;
-
     private void LateUpdate()
     {
         TrackPlayer();
 
-        if(canRotateCam)
-        {
-            RotationY();
-            RotationX();
-        }
+        RotationY();
+        RotationX();
     }
 
     private void TrackPlayer()
     {
-        transform.position = _player.transform.position;
+        if (_player != null)
+        {
+            transform.position = _player.transform.position;
+        }
     }
 
     private void RotationY()
@@ -54,8 +52,8 @@ public class CameraRotation : MonoBehaviour
 
     public void Look(InputAction.CallbackContext context)
     {
-        _xIncrease = context.ReadValue<Vector2>().x * _speed;
-        _yIncrease = context.ReadValue<Vector2>().y * -_speed;
+        _xIncrease = context.ReadValue<Vector2>().x * _speed * Time.deltaTime;
+        _yIncrease = context.ReadValue<Vector2>().y * -_speed * Time.deltaTime;
     }
 
 }

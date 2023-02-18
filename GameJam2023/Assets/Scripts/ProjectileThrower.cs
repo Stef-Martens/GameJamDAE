@@ -21,10 +21,7 @@ public class ProjectileThrower : MonoBehaviour
     [SerializeField]
     private Transform _releasePosition;
     [Header("Ball Controls")]
-    //[SerializeField]
-    //[Range(1, 100)]
-    //private float _throwStrength = 10f;
-    private float _maxThrowStrength = 30f;
+    private float _maxThrowStrength = 40f;
     [SerializeField]
     [Range(1, 20)]
     private float _minThrowStrength = 10f;

@@ -11,4 +11,6 @@ public class PlayerDetails : MonoBehaviour
     {
         transform.position = startPos;
     }
+
+    
 }

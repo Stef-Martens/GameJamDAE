@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     }
 
     [SerializeField]
+    private Healthbar _healthBar;
+    [SerializeField]
     private Transform _camTarget;
     [SerializeField]
     private float _maxSpeed;
@@ -55,6 +57,9 @@ public class PlayerController : MonoBehaviour
     private float _distToGround;
     private float _timeToWakeUp;
     private float _elapsedResetBonesTime;
+    private float _currentHealth;
+    private float _maxHealth = 10;
+
 
     private Rigidbody _rb;
 
@@ -73,9 +78,12 @@ public class PlayerController : MonoBehaviour
 
     public LayerMask groundLayer;
     public bool canMove = true;
+    public GameObject player;
 
     private void Awake()
     {
+        _currentHealth = _maxHealth;
+        _healthBar.UpdateHealthBar(_maxHealth, _currentHealth); 
         _rb = GetComponent<Rigidbody>();
         _inputAsset = GetComponentInParent<PlayerInput>().actions;
         _player = _inputAsset.FindActionMap("Player");
@@ -174,7 +182,7 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, _distToGround + 0.1f, groundLayer);
+        return Physics.Raycast(transform.position, -Vector3.up, _distToGround + 0.2f, groundLayer);
     }
 
     private void GetRagdollComponents()
@@ -196,7 +204,6 @@ public class PlayerController : MonoBehaviour
 
     private void EnableRagDoll()
     {
-
         foreach (Collider col in _ragdollColliders)
         {
             col.enabled = true;
@@ -211,8 +218,14 @@ public class PlayerController : MonoBehaviour
         _mainCollider.enabled = false;
         _rb.isKinematic = true;
         canMove = false;
-        _cameraRotation.canRotateCam = false;
+
         _timeToWakeUp = 3.5f;
+        _currentHealth -= 1;
+
+        if (_currentHealth <= 0)
+        {
+            _timeToWakeUp = 10f;
+        }
     }
 
     private void DisableRagDoll()
@@ -233,7 +246,6 @@ public class PlayerController : MonoBehaviour
         _mainCollider.enabled = true;
         _rb.isKinematic = false;
         canMove = true;
-        _cameraRotation.canRotateCam = true;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -247,6 +259,10 @@ public class PlayerController : MonoBehaviour
     private void TriggerRagdoll()
     {
         EnableRagDoll();
+        if(_healthBar != null)
+        {
+            _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
+        }
         _currentState = PlayerState.Ragdoll;
     }
 
@@ -283,6 +299,11 @@ public class PlayerController : MonoBehaviour
             _currentState = PlayerState.ResettingBones;
             _elapsedResetBonesTime = 0;
         }
+
+        if(_timeToWakeUp <= 0 && _currentHealth <= 0)
+        {
+            Destroy(player);
+        }
     }
 
     private void StandingUpBehaviour()
@@ -291,6 +312,11 @@ public class PlayerController : MonoBehaviour
         {
             _currentState = PlayerState.Moving;
         }
+    }
+
+    private void FallingBehaviour()
+    {
+
     }
 
     private void ResettingBonesBehaviour()

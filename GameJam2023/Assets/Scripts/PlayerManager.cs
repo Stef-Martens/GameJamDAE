@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     public Transform[] spawnLocations;
     void OnPlayerJoined(PlayerInput playerInput)
     {
-        Debug.Log("PlayerInput ID: " + playerInput.playerIndex);
+        //Debug.Log("PlayerInput ID: " + playerInput.playerIndex);
         // Set the player ID, add one to the index to start at Player 1
         playerInput.gameObject.GetComponent<PlayerDetails>().playerID = playerInput.playerIndex + 1;
 
