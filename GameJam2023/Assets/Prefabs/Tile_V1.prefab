@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1633102572286159657}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tile_V1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,8 +43,7 @@ GameObject:
   - component: {fileID: 1087451176118367657}
   - component: {fileID: 9128691173585791184}
   - component: {fileID: 8554265740518298978}
-  - component: {fileID: 3766506828017081730}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pCube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,16 +115,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3766506828017081730
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7944989803723332387}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.9999998, y: 0.14999999, z: 2.9999998}
-  m_Center: {x: 0, y: -0.074999996, z: 0}

@@ -40,7 +40,7 @@ public class Ground : MonoBehaviour
         else if (health <= 0)
         {
             Destroy(groundobject);
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
@@ -52,7 +52,7 @@ public class Ground : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if(collision.gameObject.CompareTag("ball"))
+        if (collision.gameObject.CompareTag("ball"))
         {
             health -= 50;
         }

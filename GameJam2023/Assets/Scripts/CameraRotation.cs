@@ -23,24 +23,23 @@ public class CameraRotation : MonoBehaviour
 
     private void LateUpdate()
     {
-        TrackPlayer();
-
-        RotationY();
-        RotationX();
+        if (_player != null)
+        {
+            TrackPlayer();
+            RotationY();
+            RotationX();
+        }
     }
 
     private void TrackPlayer()
     {
-        if (_player != null)
-        {
-            transform.position = _player.transform.position;
-        }
+        transform.position = _player.transform.position;
     }
 
     private void RotationY()
     {
         _yRotation += _yIncrease;
-        _yRotation = Mathf.Clamp(_yRotation, 1, 60);
+        _yRotation = Mathf.Clamp(_yRotation, 1, 70);
         _orbitY.transform.localEulerAngles = new Vector3(_yRotation, _orbitY.transform.localEulerAngles.y, _orbitY.transform.localEulerAngles.z);
     }
 

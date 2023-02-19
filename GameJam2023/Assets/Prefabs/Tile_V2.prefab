@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 2291687397611382018}
   - component: {fileID: 8008002180644634415}
   - component: {fileID: 7676442818634938981}
-  - component: {fileID: 6661856701528075091}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6661856701528075091
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4179469152688357082}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.9999998, y: 0.24731039, z: 3}
-  m_Center: {x: 0, y: -0.11969783, z: 0.016901195}
 --- !u!1 &6223990525398041383
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4230529123795809202}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tile_V2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

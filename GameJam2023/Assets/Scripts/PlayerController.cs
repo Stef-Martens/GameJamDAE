@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
     private float _currentHealth;
     private float _maxHealth = 10;
 
-
     private Rigidbody _rb;
 
     private InputActionAsset _inputAsset;
@@ -314,10 +313,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FallingBehaviour()
-    {
+    //private void FallingBehaviour()
+    //{
 
-    }
+    //}
 
     private void ResettingBonesBehaviour()
     {
@@ -326,15 +325,18 @@ public class PlayerController : MonoBehaviour
 
         for(int boneIndex = 0; boneIndex< _bones.Length; boneIndex++)
         {
-            _bones[boneIndex].localPosition = Vector3.Lerp(
+            if(_bones != null)
+            {
+                _bones[boneIndex].localPosition = Vector3.Lerp(
                 _ragdollBoneTransforms[boneIndex].Position,
                 _standUpBoneTransforms[boneIndex].Position,
-                elapsedPercentage );
+                elapsedPercentage);
 
-            _bones[boneIndex].localRotation = Quaternion.Lerp(
-                _ragdollBoneTransforms[boneIndex].Rotation,
-                _standUpBoneTransforms[boneIndex].Rotation,
-                elapsedPercentage );
+                _bones[boneIndex].localRotation = Quaternion.Lerp(
+                    _ragdollBoneTransforms[boneIndex].Rotation,
+                    _standUpBoneTransforms[boneIndex].Rotation,
+                    elapsedPercentage);
+            }
         }
 
         if(elapsedPercentage >= 1)

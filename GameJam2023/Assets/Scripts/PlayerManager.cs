@@ -7,8 +7,10 @@ using UnityEngine.InputSystem;
 public class PlayerManager : MonoBehaviour
 {
     public Transform[] spawnLocations;
+    public Camera sceneCamera;
     void OnPlayerJoined(PlayerInput playerInput)
     {
+        sceneCamera.gameObject.SetActive(false);
         //Debug.Log("PlayerInput ID: " + playerInput.playerIndex);
         // Set the player ID, add one to the index to start at Player 1
         playerInput.gameObject.GetComponent<PlayerDetails>().playerID = playerInput.playerIndex + 1;
